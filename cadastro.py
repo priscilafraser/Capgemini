@@ -1,47 +1,48 @@
 from datetime import datetime
 import pandas as pd
 
-
-##################################################
+print('\nSistema de cadastro de anúncios.\n')
 anuncio = []
+
+# Função para cadastrar
 def cadastro():
     nome = input('Digite o nome do anúncio: ')
     cliente = input('Digite o nome do cliente: ')
-    # Data final
-    d2 = datetime.strptime(input(f'Digite a data de início:'), '%d-%m-%Y')
-
     # Data inicial
-    d1 = datetime.strptime(input(f'Digite a data de término:'), '%d-%m-%Y')
-    quantidade_dias = abs((d2 - d1).days) + 1
+    dataInicio = datetime.strptime(input(f'Digite a data de início (dd-mm-aaaa):'), '%d-%m-%Y')
+
+    # Data final
+    dataFim = datetime.strptime(input(f'Digite a data de término (dd-mm-aaaa):'), '%d-%m-%Y')
+    quantidade_dias = abs((dataFim - dataInicio).days) + 1
 
     investimentoTotal = int(input('Digite o valor do investimento total: '))
     investimentoDiario = investimentoTotal / quantidade_dias
-    anuncio.append((nome, cliente, d2, d1, f'{quantidade_dias} dias', investimentoDiario))
-    #dados = pd.DataFrame(anuncio)
-    print(anuncio)
-    """ print(dados) ""
+    anuncio.append((nome, cliente, dataInicio, dataFim, f'{quantidade_dias} dias', investimentoDiario))
 
-dados = []
+
+
+# Função para visualizar cadastros
 def visualizar():
     dados = pd.DataFrame(anuncio, columns=['NomeAnúncio', 'Cliente', 'DataInício', 'DataFinal', 'Quant.Dias', 'Invest.Diário'])
     print(dados)
 
 
+
+# Função para filtrar
 def filtro():
     dados = pd.DataFrame(anuncio, columns=['NomeAnúncio', 'Cliente', 'DataInício', 'DataFinal', 'Quant.Dias', 'Invest.Diário'])
-    dados = dados[[input()]]
+    dados = dados.loc[dados['Cliente'] == input(f'Digite o nome do cliente: ')]
     print(dados)
 
 
 
-#def filtrar():
-
+# Funcionamento do sistema
 while True:
     menu = int(input('''
     Deseja:
-        [1] - Cadastrar
-        [2] - Visualizar
-        [3] - Filtrar
+        [1] - Cadastrar Anúncios
+        [2] - Visualizar Anúncios
+        [3] - Filtrar por Cliente
         [4] - Sair
                 '''))
 
@@ -53,29 +54,6 @@ while True:
     elif menu == 3:
         filtro()
     elif menu ==4:
+        print('Cadastros finalizados.')
         break
 
-
-""" quantidade máxima de visualizações
-
-quantidade máxima de cliques
-
-quantidade máxima de compartilhamentos """
-
-
-
-""" import datetime
-from datetime import datetime
-
-i = '2017/05/05'
-f = '2017/05/01'
-
-# Data final
-d2 = datetime.strptime(input(f'Digite:'), '%Y-%m-%d')
-
-# Data inicial
-d1 = datetime.strptime(input(f'Digite:'), '%Y-%m-%d')
-
-# Calculo da quantidade de dias
-quantidade_dias = abs((d2 - d1).days) + 1
-print(quantidade_dias) """
